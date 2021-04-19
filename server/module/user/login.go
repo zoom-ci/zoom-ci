@@ -105,7 +105,7 @@ func (login *Login) ValidateToken() error {
 }
 
 func (login *Login) createToken() error {
-	loginKey := gostring.StrRandom(58)
+	loginKey := gostring.StrRandom(40)
 	loginRaw := fmt.Sprintf("%d\t%s", login.UserId, loginKey)
 	var (
 		err        error
@@ -116,7 +116,6 @@ func (login *Login) createToken() error {
 		return err
 	}
 	login.Token = gostring.Base64UrlEncode(tokenBytes)
-
 	token := &Token{
 		UserId: login.UserId,
 		Token:  loginKey,

@@ -136,7 +136,6 @@ func (s *zoom) initEnv() error {
 		return errors.New("zoom config 'Cipher' not setting")
 	}
 	dec, err := base64.StdEncoding.DecodeString(s.Config.Zoom.Cipher)
-
 	if err != nil {
 		return errors.New(fmt.Sprintf("decode Cipher failed, %s", err.Error()))
 	}
