@@ -73,6 +73,8 @@ const (
 	SERVER_NEW        = 4102 // 新增服务器
 	SERVER_EDIT       = 4103 // 编辑服务器
 	SERVER_DEL        = 4104 // 删除服务器
+
+	SYSTEM_STATUS = 5001 // 系统状态
 )
 
 var privToApiMap = map[int][]string{
@@ -230,6 +232,9 @@ var privToApiMap = map[int][]string{
 		reqApi.DEPLOY_DEPLOY_STOP,
 		reqApi.DEPLOY_DEPLOY_ROLLBACK,
 	},
+	SYSTEM_STATUS: []string{
+		reqApi.SYSTEM_STATUS,
+	},
 }
 
 type PrivItem struct {
@@ -243,7 +248,7 @@ type PrivGroup struct {
 }
 
 var PrivList = []PrivGroup{
-	privProject, privUser, privServer, privDeploy,
+	privProject, privUser, privServer, privDeploy, privSystem,
 }
 
 var privProject = PrivGroup{
@@ -414,6 +419,16 @@ var privDeploy = PrivGroup{
 		PrivItem{
 			Label: "上线单-废弃",
 			Value: DEPLOY_DROP,
+		},
+	},
+}
+
+var privSystem = PrivGroup{
+	Label: "系统",
+	Items: []PrivItem{
+		PrivItem{
+			Label: "系统-状态",
+			Value: SYSTEM_STATUS,
 		},
 	},
 }

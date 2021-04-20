@@ -48,6 +48,7 @@ type zoom struct {
 	RemoteSpace      string
 	CipherKey        []byte
 	AppHost          string
+	AppName          string
 	Config           *server.Config
 	ConfigFileHandle string
 	ConfigHandle     *goconfig.ConfigFile
@@ -117,6 +118,7 @@ func (s *zoom) registerMail() {
 
 func (s *zoom) initEnv() error {
 	s.AppHost = s.Config.Zoom.AppHost
+	s.AppName = s.Config.Zoom.AppName
 	s.LocalSpace = s.Config.Zoom.LocalSpace
 	s.LocalTmpSpace = s.LocalSpace + "/tmp"
 	s.LocalTarSpace = s.LocalSpace + "/tar"

@@ -53,12 +53,12 @@ export default {
 
     ConfirmCopy(cb, title) {
         if (!title) {
-            title = '此操作将自动创建一个复制项目，是否继续?'
+            title = '此操作将复制一个新项目，是否继续?'
         }
         this.$confirm(title, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
-            type: 'warning'
+            type: 'info'
         }).then(() => {
             cb()
         }).catch((err) => {

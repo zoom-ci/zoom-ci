@@ -51,13 +51,11 @@ export default {
     },
     mounted() {
         this.initInstallStatus()
-        console.log("xxxxx")
     },
     methods: {
         initInstallStatus() {
             let self = this;
             installStatusApi().then(res => {
-                console.log(res)
                 if (!res.is_installed) {
                     this.$router.push({name: 'install'})
                 }

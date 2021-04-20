@@ -147,6 +147,7 @@ func main() {
 			RemoteSpace: configOrDefault("zoom", "remote_space", "~/.zoom"),
 			Cipher:      configOrDefault("zoom", "cipher_key", ""),
 			AppHost:     configOrDefault("zoom", "app_host", ""),
+			AppName:     configOrDefault("zoom", "app_name", "Zoom-CI"),
 		},
 		Mail: &server.MailConfig{
 			Enable: configIntOrDefault("mail", "enable", 0),

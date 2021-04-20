@@ -7,6 +7,7 @@ package api
 const (
 	SYSTEM_INSTALL        = "/system/install"
 	SYSTEM_INSTALL_STATUS = "/system/install_status"
+	SYSTEM_STATUS         = "/system/status"
 
 	LOGIN        = "/login"
 	LOGOUT       = "/logout"
@@ -49,7 +50,7 @@ const (
 	PROJECT_MEMBER_LIST   = "/project/member/list"
 	PROJECT_MEMBER_REMOVE = "/project/member/remove"
 	PROJECT_ADD           = "/project/add"
-	PROJECT_COPY           = "/project/copy"
+	PROJECT_COPY          = "/project/copy"
 	PROJECT_UPDATE        = "/project/update"
 	PROJECT_LIST          = "/project/list"
 	PROJECT_SWITCHSTATUS  = "/project/switchstatus"

@@ -39,4 +39,6 @@ export default {
     SERVER_NEW: 4102,
     SERVER_EDIT: 4103,
     SERVER_DEL: 4104,
+
+    SYSTEM_STATUS: 5001,
 }

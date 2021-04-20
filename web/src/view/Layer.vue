@@ -307,7 +307,6 @@
             initInstallStatus() {
                 let self = this;
                 installStatusApi().then(res => {
-                    console.log(res)
                     if (res.is_installed) {
                         self.initLoginStatus()
                     } else {

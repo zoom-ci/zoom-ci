@@ -24,6 +24,7 @@ func RegisterRoute() {
 	{
 		api.POST(reqApi.SYSTEM_INSTALL, system.Install)
 		api.GET(reqApi.SYSTEM_INSTALL_STATUS, system.InstallStatus)
+		api.POST(reqApi.SYSTEM_STATUS, system.Status)
 
 		api.POST(reqApi.LOGIN, user.Login)
 		api.POST(reqApi.LOGOUT, user.Logout)
@@ -96,12 +97,11 @@ func RegisterRoute() {
 }
 
 func RegisterWebRouter() {
-
 	tpl := template.Must(template.New("").ParseFS(zoom.WebPath, "web/dist/*.html"))
 	zoom.App.Gin.SetHTMLTemplate(tpl)
 	zoom.App.Gin.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{
-			"title": "Zoom",
+			"appName": zoom.App.Config.Zoom.AppName,
 		})
 	})
 	zoom.App.Gin.GET("/web/dist/*filepath", gin.WrapH(http.FileServer(http.FS(zoom.WebPath))))

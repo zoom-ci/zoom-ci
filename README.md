@@ -70,7 +70,7 @@ Start Running...
 <p style="margin: 20px 0 40px 0;">
   <img height="200" src="https://zoom-ci.github.io/docs/assets/img/qq.png" />
 </p>
-扫码加入QQ群。
+
 
 ## LICENSE
 

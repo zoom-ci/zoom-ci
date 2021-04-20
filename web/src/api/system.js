@@ -6,3 +6,6 @@ export function installApi(data) {
 export function installStatusApi() {
     return get("/system/install_status")
 }
+export function systemStatus() {
+    return post("/system/status")
+}

@@ -129,7 +129,6 @@ export default {
       let self = this;
       installStatusApi()
         .then((res) => {
-          console.log(res);
           if (res.is_installed) {
             this.$router.push({ name: "login" });
           }

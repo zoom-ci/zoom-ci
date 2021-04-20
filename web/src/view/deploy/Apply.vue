@@ -107,10 +107,7 @@
 
                     <el-form-item 
                     :label="$t('deploy_illustrate')"
-                    prop="description"
-                    :rules="[
-                        { required: true, message: $t('deploy_illustrate_cannot_empty'), trigger: 'blur'},
-                    ]">
+                    prop="description">
                         <el-input :rows="4" type="textarea" :placeholder="$t('please_input_deploy_illustrate')" v-model="dialogForm.description" autocomplete="off"></el-input>
                     </el-form-item>
 

@@ -18,6 +18,7 @@ type (
 		RemoteSpace string
 		Cipher      string
 		AppHost     string
+		AppName     string
 	}
 
 	LogConfig struct {
