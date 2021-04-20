@@ -179,9 +179,24 @@
                         <div class="app-form-explain">{{ $t('if_not_need_to_assign_branch_name') }}</div>
                     </el-form-item>
                     <div class="app-divider"></div>
+                    
                     <h4 class="app-form-subtitle">{{ $t('deploy_setting') }}</h4>
 
+
                     <el-form-item 
+                    :label="$t('project_type')"
+                    prop="project_type"
+                    :rules="[
+                        { required: true, message: $t('project_type_cannot_empty'), trigger: 'blur'},
+                    ]">
+                        <el-radio-group v-model="dialogForm.project_type">
+                            <el-radio :label="1">{{ $t('project_type_1') }}</el-radio>
+                            <el-radio :label="2">{{ $t('project_type_2') }}</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+
+                    <el-form-item 
+                    v-if="dialogForm.project_type == 1"
                     :label="$t('online_cluster')"
                     prop="online_cluster"
                     :rules="[
@@ -215,6 +230,7 @@
                     </el-form-item>
 
                     <el-form-item 
+                    v-if="dialogForm.project_type == 1"
                     :label="$t('user')"
                     prop="deploy_user"
                     :rules="[
@@ -233,15 +249,32 @@
                     </el-form-item>
 
                     <el-form-item 
-                    :label="$t('pre_deploy_cmd')"
+                    v-if="dialogForm.project_type == 1"
+                    :label="$t('pre_deploy_cmd_1')"
                     prop="pre_deploy_cmd">
-                        <el-input :placeholder="$t('pre_deploy_cmd_tips')" type="textarea" :rows="3" v-model="dialogForm.pre_deploy_cmd" autocomplete="off"></el-input>
+                        <el-input :placeholder="$t('pre_deploy_cmd_tips_1')" type="textarea" :rows="3" v-model="dialogForm.pre_deploy_cmd" autocomplete="off"></el-input>
                     </el-form-item>
 
                     <el-form-item 
-                    :label="$t('after_deploy_cmd')"
+                    v-if="dialogForm.project_type == 1"
+                    :label="$t('after_deploy_cmd_1')"
                     prop="after_deploy_cmd">
-                        <el-input :placeholder="$t('after_deploy_cmd_tips')" type="textarea" :rows="3" v-model="dialogForm.after_deploy_cmd" autocomplete="off"></el-input>
+                        <el-input :placeholder="$t('after_deploy_cmd_tips_1')" type="textarea" :rows="3" v-model="dialogForm.after_deploy_cmd" autocomplete="off"></el-input>
+                    </el-form-item>
+
+
+                    <el-form-item 
+                    v-if="dialogForm.project_type == 2"
+                    :label="$t('pre_deploy_cmd_2')"
+                    prop="pre_deploy_cmd">
+                        <el-input :placeholder="$t('pre_deploy_cmd_tips_2')" type="textarea" :rows="3" v-model="dialogForm.pre_deploy_cmd" autocomplete="off"></el-input>
+                    </el-form-item>
+
+                    <el-form-item 
+                    v-if="dialogForm.project_type == 2"
+                    :label="$t('after_deploy_cmd_2')"
+                    prop="after_deploy_cmd">
+                        <el-input :placeholder="$t('after_deploy_cmd_tips_2')" type="textarea" :rows="3" v-model="dialogForm.after_deploy_cmd" autocomplete="off"></el-input>
                     </el-form-item>
 
                     <div class="app-divider"></div>
@@ -483,6 +516,7 @@ export default {
                 repo_url: '',
                 repo_branch: '',
                 deploy_mode: 0,
+                project_type: 1,
                 online_cluster: [],
                 deploy_user: '',
                 deploy_path: '',
