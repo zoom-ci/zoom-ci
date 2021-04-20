@@ -63,15 +63,14 @@ Start Running...
 - 安装流程简化（已完成）
 - 支持项目复制（已完成） 
 - 支持定时任务
-- 支持webapi调用
-- 日志模块优化
+- 支持WebHook调用
 - 支持客户端版本集成
 
-## 微信群
+## QQ群
 <p style="margin: 20px 0 40px 0;">
-  <img height="200" src="https://zoom-ci.github.io/docs/assets/img/wechat.png" />
+  <img height="200" src="https://zoom-ci.github.io/docs/assets/img/qq.png" />
 </p>
-扫码加微信后拉你进群。
+扫码加入QQ群。
 
 ## LICENSE
 
