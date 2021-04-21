@@ -44,7 +44,7 @@ type ApplyUpdateFormBind struct {
 	ID            int    `form:"id" binding:"required"`
 	BranchName    string `form:"branch_name" binding:"required"`
 	CommitVersion string `form:"commit_version"`
-	Description   string `form:"description" binding:"required"`
+	Description   string `form:"description"`
 }
 
 func ApplyRollbackList(c *gin.Context) {

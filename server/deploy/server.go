@@ -189,16 +189,6 @@ func (srv *Server) deployCmdWithoutServer() []string {
 			),
 		)
 	}
-	//packFileName := path.Base(srv.PackFile)
-	//cmds = append(
-	//	cmds,
-	//	fmt.Sprintf(
-	//		"cd %s; tar -zxf %s -C %s;",
-	//		srv.DeployTmpPath,
-	//		packFileName,
-	//		srv.DeployPath,
-	//	),
-	//)
 	if srv.PostCmd != "" {
 		cmds = append(
 			cmds,

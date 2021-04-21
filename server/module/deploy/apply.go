@@ -202,6 +202,7 @@ func (a *Apply) Detail() error {
 	a.BranchName = apply.BranchName
 	a.CommitVersion = apply.CommitVersion
 	a.AuditStatus = apply.AuditStatus
+	a.AuditRefusalReason = apply.AuditRefusalReason
 	a.Status = apply.Status
 	a.UserId = apply.UserId
 	a.RollbackId = apply.RollbackId

@@ -103,6 +103,7 @@
                         <span class="app-color-success" v-else-if="scope.row.audit_status == $root.AuditStatusOk">{{ $t('pass') }}</span>
                         <span class="app-color-error" v-else-if="scope.row.audit_status == $root.AuditStatusRefuse">{{ $t('denied') }}</span>
                         <span v-else>--</span>
+                        <el-button type="text" @click="operateHandler('audit', scope.row)" v-if="scope.row.audit_status == $root.AuditStatusPending && scope.row.status == $root.ApplyStatusNone && $root.CheckPriv($root.Priv.DEPLOY_AUDIT)"><i class="iconfont left small icon-audit"></i>{{ $t('audit') }}</el-button>
                     </template>
                 </el-table-column>
                 <el-table-column prop="status" width="80" :label="$t('status')">
@@ -116,11 +117,10 @@
                         <span v-else>--</span>
                     </template>
                 </el-table-column>
-                <el-table-column :label="$t('operate')" width="240" align="right">
+                <el-table-column :label="$t('operate')" width="190" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" @click="operateHandler('view', scope.row)" v-if="$root.CheckPriv($root.Priv.DEPLOY_VIEW)"><i class="iconfont left small icon-view"></i>{{ $t('view') }}</el-button>
                         <el-button type="text" @click="operateHandler('edit', scope.row)" v-if="scope.row.status == $root.ApplyStatusNone && (scope.row.audit_status == $root.AuditStatusPending || scope.row.audit_status == $root.AuditStatusRefuse) && $root.CheckPriv($root.Priv.DEPLOY_EDIT)"><i class="iconfont left small icon-edit"></i>{{ $t('edit') }}</el-button>
-                        <el-button type="text" @click="operateHandler('audit', scope.row)" v-if="scope.row.audit_status == $root.AuditStatusPending && scope.row.status == $root.ApplyStatusNone && $root.CheckPriv($root.Priv.DEPLOY_AUDIT)"><i class="iconfont left small icon-audit"></i>{{ $t('audit') }}</el-button>
                         <el-button type="text" @click="operateHandler('deploy', scope.row)" v-if="scope.row.audit_status == $root.AuditStatusOk && (scope.row.status == $root.ApplyStatusNone || scope.row.status == $root.ApplyStatusIng || scope.row.status == $root.ApplyStatusSuccess || scope.row.status == $root.ApplyStatusFailed || scope.row.status == $root.ApplyStatusRollback) && $root.CheckPriv($root.Priv.DEPLOY_DEPLOY)"><i class="iconfont left small icon-coffee"></i>{{ $t('online') }}</el-button>
                         <el-button type="text" @click="operateHandler('drop', scope.row)" v-if="scope.row.status != $root.ApplyStatusIng && scope.row.status != $root.ApplyStatusDrop && $root.CheckPriv($root.Priv.DEPLOY_DROP)"><i class="iconfont left small icon-drop"></i>{{ $t('drop') }}</el-button>
                     </template>
@@ -165,7 +165,7 @@
                         {{ dialogDetail.description }}
                     </el-form-item>
                     <el-form-item :label="$t('audit_status')">
-                        {{ this.auditStatusTitle(dialogDetail.audit_status) }}
+                        {{ this.auditStatusTitle(dialogDetail.audit_status) }} {{ dialogDetail.audit_refusal_reason }}
                     </el-form-item>
                     <el-form-item :label="$t('submiter')">
                         {{ dialogDetail.username }} - {{ dialogDetail.email }}
@@ -461,6 +461,7 @@ export default {
                         username: row.username,
                         ctime: row.ctime,
                         audit_status: applyDetail.audit_status,
+                        audit_refusal_reason: applyDetail.audit_refusal_reason,
                         status: applyDetail.status,
                         cmd: cmd,
                     }
