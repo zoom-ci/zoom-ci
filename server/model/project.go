@@ -13,6 +13,7 @@ type Project struct {
 	SpaceId          int    `gorm:"type:int(11);not null;default:0"`
 	Name             string `gorm:"type:varchar(100);not null;default:''"`
 	Description      string `gorm:"type:varchar(500);not null;default:''"`
+	ProjectType      int    `gorm:"type:tinyint(500);not null;default:1"`
 	NeedAudit        int    `gorm:"type:int(11);not null;default:0"`
 	Status           int    `gorm:"type:int(11);not null;default:0"`
 	RepoUrl          string `gorm:"type:varchar(500);not null;default:''"`
@@ -63,7 +64,7 @@ func (m *Project) Count(query QueryParam) (int, bool) {
 func (m *Project) Copy() bool {
 	m.Ctime = int(time.Now().Unix())
 	m.Name = m.Name + ".Copy"
-	return CreateWithOmit(m,"id")
+	return CreateWithOmit(m, "id")
 }
 
 func (m *Project) Delete() bool {

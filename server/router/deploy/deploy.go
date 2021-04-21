@@ -300,6 +300,8 @@ func DeployStart(c *gin.Context) {
 		return
 	}
 
+	// TODO process cmds by project type
+
 	// cluster servers
 	serverList, err := server.ServerGetListByGroupIds(proj.OnlineCluster)
 	if err != nil {

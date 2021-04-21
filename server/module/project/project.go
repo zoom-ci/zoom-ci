@@ -17,6 +17,7 @@ type Project struct {
 	SpaceId          int    `json:"space_id"`
 	Name             string `json:"name"`
 	Description      string `json:"description"`
+	ProjectType      int `json:"project_type"`
 	NeedAudit        int    `json:"need_audit"`
 	Status           int    `json:"status"`
 	RepoUrl          string `json:"repo_url"`
@@ -140,6 +141,7 @@ func (p *Project) Detail() error {
 	p.SpaceId = project.SpaceId
 	p.Name = project.Name
 	p.Description = project.Description
+	p.ProjectType = project.ProjectType
 	p.NeedAudit = project.NeedAudit
 	p.Status = project.Status
 	p.RepoUrl = project.RepoUrl
@@ -221,6 +223,7 @@ func (p *Project) CreateOrUpdate() error {
 		SpaceId:        p.SpaceId,
 		Name:           p.Name,
 		Description:    p.Description,
+		ProjectType:    p.ProjectType,
 		NeedAudit:      p.NeedAudit,
 		RepoUrl:        p.RepoUrl,
 		DeployMode:     p.DeployMode,
@@ -237,6 +240,7 @@ func (p *Project) CreateOrUpdate() error {
 		updateData := map[string]interface{}{
 			"name":             p.Name,
 			"description":      p.Description,
+			"project_type":      p.ProjectType,
 			"need_audit":       p.NeedAudit,
 			"repo_url":         p.RepoUrl,
 			"deploy_mode":      p.DeployMode,

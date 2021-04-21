@@ -344,8 +344,16 @@
                 
                     <div class="app-divider"></div>
                     <h4 class="app-form-subtitle">{{ $t('deploy_setting') }}</h4>
+                    <el-form-item :label="$t('project_type')">
+                        <span v-if="dialogViewForm.project_type == 1">
+                            {{ $t('project_type_1') }}
+                        </span>
+                        <span v-if="dialogViewForm.project_type == 2">
+                            {{ $t('project_type_2') }}
+                        </span>
+                    </el-form-item>
 
-                    <el-form-item :label="$t('online_cluster')">
+                    <el-form-item v-if="dialogViewForm.project_type == 1" :label="$t('online_cluster')">
                         <div v-if="dialogViewForm.online_cluster && dialogViewForm.online_cluster.length">
                             <ul class="app-form-box">
                                 <li class="item" v-for="id in dialogViewForm.online_cluster" :key="id">
@@ -355,7 +363,7 @@
                         </div>
                     </el-form-item>
 
-                    <el-form-item :label="$t('user')">
+                    <el-form-item v-if="dialogViewForm.project_type == 1" :label="$t('user')">
                         {{ dialogViewForm.deploy_user }}
                     </el-form-item>
 
@@ -363,11 +371,19 @@
                         {{ dialogViewForm.deploy_path }}
                     </el-form-item>
 
-                    <el-form-item :label="$t('pre_deploy_cmd')">
+                    <el-form-item v-if="dialogViewForm.project_type == 1" :label="$t('pre_deploy_cmd_1')">
                         <el-input type="textarea" :rows="3" :value="dialogViewForm.pre_deploy_cmd" readonly="readonly"></el-input>
                     </el-form-item>
 
-                    <el-form-item :label="$t('after_deploy_cmd')">
+                    <el-form-item v-if="dialogViewForm.project_type == 1" :label="$t('after_deploy_cmd_1')">
+                        <el-input type="textarea" :rows="3" :value="dialogViewForm.after_deploy_cmd" readonly="readonly"></el-input>
+                    </el-form-item>
+
+                    <el-form-item v-if="dialogViewForm.project_type == 2" :label="$t('pre_deploy_cmd_2')">
+                        <el-input type="textarea" :rows="3" :value="dialogViewForm.pre_deploy_cmd" readonly="readonly"></el-input>
+                    </el-form-item>
+
+                    <el-form-item v-if="dialogViewForm.project_type == 2" :label="$t('after_deploy_cmd_2')">
                         <el-input type="textarea" :rows="3" :value="dialogViewForm.after_deploy_cmd" readonly="readonly"></el-input>
                     </el-form-item>
 

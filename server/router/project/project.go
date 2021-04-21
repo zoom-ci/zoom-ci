@@ -18,6 +18,7 @@ type ProjectFormBind struct {
 	SpaceId        int    `form:"space_id"`
 	Name           string `form:"name" binding:"required"`
 	Description    string `form:"description"`
+	ProjectType    int    `form:"project_type"`
 	NeedAudit      int    `form:"need_audit"`
 	RepoUrl        string `form:"repo_url" binding:"required"`
 	RepoBranch     string `form:"repo_branch"`
@@ -288,6 +289,7 @@ func projectCreateOrUpdate(c *gin.Context) {
 		SpaceId:        projectForm.SpaceId,
 		Name:           projectForm.Name,
 		Description:    projectForm.Description,
+		ProjectType:    projectForm.ProjectType,
 		NeedAudit:      projectForm.NeedAudit,
 		RepoUrl:        projectForm.RepoUrl,
 		DeployMode:     projectForm.DeployMode,
