@@ -300,52 +300,74 @@ func DeployStart(c *gin.Context) {
 		return
 	}
 
-	// TODO process cmds by project type
-
-	// cluster servers
-	serverList, err := server.ServerGetListByGroupIds(proj.OnlineCluster)
-	if err != nil {
-		render.AppError(c, err.Error())
-		return
-	}
-
-	d := &deploy.Deploy{
-		ApplyId: id,
-	}
-	if err := d.DeleteByApplyId(); err != nil {
-		render.AppError(c, err.Error())
-		return
-	}
-
-	groupSrvs := map[int][]server.Server{}
-	for _, srv := range serverList {
-		groupSrvs[srv.GroupId] = append(groupSrvs[srv.GroupId], srv)
-	}
-
 	deploys := []*depTask.Deploy{}
-	for _, gid := range proj.OnlineCluster {
-		gsrv, exists := groupSrvs[gid]
-		if !exists {
-			continue
+
+	if proj.ProjectType == 1 {
+		// cluster servers
+		serverList, err := server.ServerGetListByGroupIds(proj.OnlineCluster)
+		if err != nil {
+			render.AppError(c, err.Error())
+			return
 		}
+
+		d := &deploy.Deploy{
+			ApplyId: id,
+		}
+		if err := d.DeleteByApplyId(); err != nil {
+			render.AppError(c, err.Error())
+			return
+		}
+
+		groupSrvs := map[int][]server.Server{}
+		for _, srv := range serverList {
+			groupSrvs[srv.GroupId] = append(groupSrvs[srv.GroupId], srv)
+		}
+
+		for _, gid := range proj.OnlineCluster {
+			gsrv, exists := groupSrvs[gid]
+			if !exists {
+				continue
+			}
+			dep := &depTask.Deploy{
+				ID:            gid,
+				User:          proj.DeployUser,
+				PreCmd:        proj.PreDeployCmd,
+				PostCmd:       proj.AfterDeployCmd,
+				DeployPath:    proj.DeployPath,
+				DeployTmpPath: zoom.App.RemoteSpace,
+				PackFile:      build.Tar,
+			}
+			for _, srv := range gsrv {
+				dep.AddServer(srv.ID, srv.Ip, srv.SSHPort)
+			}
+			deploys = append(deploys, dep)
+
+			// Write task init to DB
+			d := &deploy.Deploy{
+				ApplyId: id,
+				GroupId: gid,
+				Status:  deploy.DEPLOY_STATUS_NONE,
+			}
+			if err := d.Create(); err != nil {
+				render.AppError(c, err.Error())
+				return
+			}
+		}
+	} else {
 		dep := &depTask.Deploy{
-			ID:            gid,
-			User:          proj.DeployUser,
+			ID:            0,
 			PreCmd:        proj.PreDeployCmd,
 			PostCmd:       proj.AfterDeployCmd,
 			DeployPath:    proj.DeployPath,
 			DeployTmpPath: zoom.App.RemoteSpace,
 			PackFile:      build.Tar,
 		}
-		for _, srv := range gsrv {
-			dep.AddServer(srv.ID, srv.Ip, srv.SSHPort)
-		}
+		dep.AddSelfServer()
 		deploys = append(deploys, dep)
-
 		// Write task init to DB
 		d := &deploy.Deploy{
 			ApplyId: id,
-			GroupId: gid,
+			GroupId: 0,
 			Status:  deploy.DEPLOY_STATUS_NONE,
 		}
 		if err := d.Create(); err != nil {

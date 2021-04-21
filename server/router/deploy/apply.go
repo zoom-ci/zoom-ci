@@ -35,8 +35,8 @@ type ApplyQueryBind struct {
 }
 
 type ApplyAuditFormBind struct {
-	ID                  int    `form:"id" binding:"required"`
-	AuditStatus         int    `form:"audit_status" binding:"required"`
+	ID                 int    `form:"id" binding:"required"`
+	AuditStatus        int    `form:"audit_status" binding:"required"`
 	AuditRefusalReason string `form:"audit_refusal_reason"`
 }
 
@@ -196,8 +196,8 @@ func ApplyAudit(c *gin.Context) {
 	}
 
 	applyAudit := &deploy.Apply{
-		ID:                  form.ID,
-		AuditStatus:         form.AuditStatus,
+		ID:                 form.ID,
+		AuditStatus:        form.AuditStatus,
 		AuditRefusalReason: form.AuditRefusalReason,
 	}
 	if err := applyAudit.UpdateAuditStatus(); err != nil {
@@ -521,16 +521,20 @@ func ApplyProjectDetail(c *gin.Context) {
 		render.CustomerError(c, render.CODE_ERR_NO_PRIV, "user is not in the project space")
 		return
 	}
-
-	clusterList, err := server.GroupGetMapByIds(proj.OnlineCluster)
-	if err != nil {
-		render.AppError(c, err.Error())
-		return
-	}
-	serverList, err := server.ServerGetListByGroupIds(proj.OnlineCluster)
-	if err != nil {
-		render.AppError(c, err.Error())
-		return
+	var err error
+	var clusterList map[int]server.Group
+	var serverList []server.Server
+	if proj.ProjectType == 1 {
+		clusterList, err = server.GroupGetMapByIds(proj.OnlineCluster)
+		if err != nil {
+			render.AppError(c, err.Error())
+			return
+		}
+		serverList, err = server.ServerGetListByGroupIds(proj.OnlineCluster)
+		if err != nil {
+			render.AppError(c, err.Error())
+			return
+		}
 	}
 
 	restProj := map[string]interface{}{
@@ -538,6 +542,7 @@ func ApplyProjectDetail(c *gin.Context) {
 		"name":               proj.Name,
 		"deploy_mode":        proj.DeployMode,
 		"repo_branch":        proj.RepoBranch,
+		"project_type":       proj.ProjectType,
 		"cluster_list":       clusterList,
 		"online_cluster_ids": proj.OnlineCluster,
 		"server_list":        serverList,

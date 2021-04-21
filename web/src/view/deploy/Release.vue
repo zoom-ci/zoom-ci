@@ -104,7 +104,7 @@
                     <el-button icon="iconfont small left icon-rollback" size="medium" @click="rollbackDeployHandler" type="danger">{{ $t('rollback') }}</el-button>
                     <el-alert class="app-mt-10" :title="$t('rollback_apply_order_tips')" type="warning"></el-alert>
                 </template>
-                <div v-if="deployDetail.status == $root.ApplyStatusRollback">
+                <div v-if="deployDetail.status == $root.ApplyStatusRollback && projectDetail.project_type==1">
                     <el-alert class="app-mt-10" type="warning" show-icon :closable="false">
                         <template slot="title">
                             <strong>{{ $t('rollback_created') }}</strong>
@@ -120,14 +120,14 @@
                         </template>
                     </el-alert>
                 </div>
-                <div v-if="applyDetail.is_rollback_apply">
+                <div v-if="applyDetail.is_rollback_apply && projectDetail.project_type==1">
                     <el-alert class="app-mt-10" type="warning" show-icon :closable="false">
                         <template slot="title">
                             {{ $t('rollback_tips') }}, <span class="app-link" @click="$router.push({query: {id: applyDetail.rollback_apply_id}})">{{ $t('back_apply') }}</span>
                         </template>
                     </el-alert>
                 </div>
-                <el-card shadow="never" class="app-mt-20 app-cluster-group">
+                <el-card v-if="projectDetail.project_type==1" shadow="never" class="app-mt-20 app-cluster-group">
                     <div slot="header">{{ $t('cluster_list') }}</div>
                     <el-collapse :value="projectDetail.online_cluster_ids">
                         <el-collapse-item class="app-cluster-item" v-for="c in onlineCluster" :name="c.id" :key="c.id">
@@ -150,6 +150,22 @@
                             </div>
                         </el-collapse-item>
                     </el-collapse>
+                </el-card>
+                <el-card v-if="projectDetail.project_type==2" shadow="never" class="app-mt-20 app-cluster-group">
+                    <div slot="header">本地项目</div>
+                    <div>
+                        部署状态：   
+                                <span v-if="deployDetail.groupStatus[0] == $root.DeployGroupStatusNone" class="app-color-gray"><i class="iconfont small left icon-wait"></i>{{ $t('wait_deploy') }}</span>
+                                <span v-else-if="deployDetail.groupStatus[0] == $root.DeployGroupStatusStart" class="app-color-info"><i class="iconfont el-icon-loading"></i>{{ $t('deploying') }}</span>
+                                <span v-else-if="deployDetail.groupStatus[0] == $root.DeployGroupStatusSuccess" class="app-color-success"><i class="iconfont small left icon-success"></i>{{ $t('deploy_success') }}</span>
+                                <span v-else-if="deployDetail.groupStatus[0] == $root.DeployGroupStatusFailed" class="app-color-error"><i class="iconfont small left icon-failed"></i>{{ $t('deploy_failed') }}</span>
+                        <br />部署日志：    
+                                <span v-if="deployDetail.servers[0] == undefined"></span>
+                                <span v-else-if="deployDetail.servers[0].status == $root.DeployGroupStatusNone" class="app-color-gray"><i class="iconfont small left icon-wait"></i></span>
+                                <span v-else-if="deployDetail.servers[0].status == $root.DeployGroupStatusStart" class="app-color-info"><i class="iconfont el-icon-loading"></i> <span @click="openDialogDeployHandler(0)" class="app-link">{{ $t('view') }}</span></span>
+                                <span v-else-if="deployDetail.servers[0].status == $root.DeployGroupStatusSuccess" class="app-color-success"><i class="iconfont small left icon-success"></i> <span @click="openDialogDeployHandler(0)" class="app-link">{{ $t('view') }}</span></span>
+                                <span v-else-if="deployDetail.servers[0].status == $root.DeployGroupStatusFailed" class="app-color-error"><i class="iconfont small left icon-failed"></i> <span @click="openDialogDeployHandler(0)" class="app-link">{{ $t('view') }}</span></span>
+                        </div>
                 </el-card>
             </div>
         </el-card>
@@ -234,23 +250,25 @@ export default {
     watch: {
         projectDetail() {
             let clusters = []
-            this.projectDetail.online_cluster_ids.forEach(id => {
-                if (this.projectDetail.cluster_list[id]) {
-                    let cluster = this.projectDetail.cluster_list[id]
-                    let servers = []
-                    this.projectDetail.server_list.forEach(s => {
-                        if (s.group_id == id) {
-                            servers.push(s)
-                        }
-                    })
-                    clusters.push({
-                        id: cluster.id,
-                        name: cluster.name,
-                        servers: servers,
-                    })
-                }
-            })
-            this.onlineCluster = clusters
+            if (this.projectDetail.project_type == 1) {
+                this.projectDetail.online_cluster_ids.forEach(id => {
+                    if (this.projectDetail.cluster_list[id]) {
+                        let cluster = this.projectDetail.cluster_list[id]
+                        let servers = []
+                        this.projectDetail.server_list.forEach(s => {
+                            if (s.group_id == id) {
+                                servers.push(s)
+                            }
+                        })
+                        clusters.push({
+                            id: cluster.id,
+                            name: cluster.name,
+                            servers: servers,
+                        })
+                    }
+                })
+                this.onlineCluster = clusters
+            }
         },
         '$route.query'() {
             this.initPageLoader()

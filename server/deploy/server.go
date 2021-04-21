@@ -48,6 +48,16 @@ func NewServer(srv *Server) {
 	)
 }
 
+func NewSelfServer(srv *Server) {
+	srv.result = &ServerResult{
+		Status: STATUS_INIT,
+	}
+	srv.task = command.NewTask(
+		srv.deployCmdWithoutServer(),
+		COMMAND_TIMEOUT,
+	)
+}
+
 func (srv *Server) Deploy() {
 	srv.result.Status = STATUS_ING
 	srv.task.Run()
@@ -142,6 +152,57 @@ func (srv *Server) deployCmd() []string {
 				useSshPort,
 				srv.User,
 				srv.Addr,
+				srv.PostCmd,
+			),
+		)
+	}
+	return cmds
+}
+
+func (srv *Server) deployCmdWithoutServer() []string {
+	var cmds []string
+	if srv.PackFile == "" {
+		cmds = append(cmds, "echo 'packfile empty' && exit 1")
+	}
+
+	packFileName := path.Base(srv.PackFile)
+
+	cmds = append(cmds, []string{
+		fmt.Sprintf(
+			"cp %s %s/",
+			srv.PackFile,
+			srv.DeployTmpPath,
+		),
+		fmt.Sprintf(
+			"cd %s; tar -zxf %s -C %s;",
+			srv.DeployTmpPath,
+			packFileName,
+			srv.DeployPath,
+		),
+	}...)
+	if srv.PreCmd != "" {
+		cmds = append(
+			cmds,
+			fmt.Sprintf(
+				"%s",
+				srv.PreCmd,
+			),
+		)
+	}
+	//packFileName := path.Base(srv.PackFile)
+	//cmds = append(
+	//	cmds,
+	//	fmt.Sprintf(
+	//		"cd %s; tar -zxf %s -C %s;",
+	//		srv.DeployTmpPath,
+	//		packFileName,
+	//		srv.DeployPath,
+	//	),
+	//)
+	if srv.PostCmd != "" {
+		cmds = append(
+			cmds,
+			fmt.Sprintf("%s",
 				srv.PostCmd,
 			),
 		)

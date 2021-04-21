@@ -92,6 +92,7 @@ func (install *Install) Install() error {
 		"`space_id` int UNSIGNED NOT NULL DEFAULT '0'," +
 		"`name` varchar(100) NOT NULL DEFAULT ''," +
 		"`description` varchar(500) NOT NULL DEFAULT ''," +
+		"`project_type` tinyint  NOT NULL DEFAULT '1'," +
 		"`need_audit` int UNSIGNED NOT NULL DEFAULT '0'," +
 		"`status` int UNSIGNED NOT NULL DEFAULT '0'," +
 		"`repo_url` varchar(500) NOT NULL DEFAULT ''," +

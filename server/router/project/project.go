@@ -18,13 +18,13 @@ type ProjectFormBind struct {
 	SpaceId        int    `form:"space_id"`
 	Name           string `form:"name" binding:"required"`
 	Description    string `form:"description"`
-	ProjectType    int    `form:"project_type"`
+	ProjectType    int    `form:"project_type" binding:"required"`
 	NeedAudit      int    `form:"need_audit"`
 	RepoUrl        string `form:"repo_url" binding:"required"`
 	RepoBranch     string `form:"repo_branch"`
 	DeployMode     int    `form:"deploy_mode" binding:"required"`
-	OnlineCluster  []int  `form:"online_cluster" binding:"required"`
-	DeployUser     string `form:"deploy_user" binding:"required"`
+	OnlineCluster  []int  `form:"online_cluster"`
+	DeployUser     string `form:"deploy_user"`
 	DeployPath     string `form:"deploy_path" binding:"required"`
 	PreDeployCmd   string `form:"pre_deploy_cmd"`
 	AfterDeployCmd string `form:"after_deploy_cmd"`
@@ -275,11 +275,15 @@ func projectCreateOrUpdate(c *gin.Context) {
 		return
 	}
 
-	onlineCluster := goslice.FilterSliceInt(projectForm.OnlineCluster)
-	if len(onlineCluster) == 0 {
-		render.ParamError(c, "online_cluster cannot be empty")
-		return
+	var onlineCluster []int
+	if projectForm.ProjectType == 1 {
+		onlineCluster = goslice.FilterSliceInt(projectForm.OnlineCluster)
+		if len(onlineCluster) == 0 {
+			render.ParamError(c, "online_cluster cannot be empty")
+			return
+		}
 	}
+
 	repoBranch := projectForm.RepoBranch
 	if projectForm.DeployMode == 2 {
 		repoBranch = ""

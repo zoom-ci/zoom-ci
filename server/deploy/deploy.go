@@ -55,6 +55,18 @@ func (d *Deploy) AddServer(id int, addr string, port int) {
 	d.srvs = append(d.srvs, srv)
 }
 
+func (d *Deploy) AddSelfServer() {
+	srv := &Server{
+		PreCmd:        d.PreCmd,
+		PostCmd:       d.PostCmd,
+		PackFile:      d.PackFile,
+		DeployTmpPath: d.DeployTmpPath,
+		DeployPath:    d.DeployPath,
+	}
+	NewSelfServer(srv)
+	d.srvs = append(d.srvs, srv)
+}
+
 func (d *Deploy) Parallel() {
 	if d.status == STATUS_FAILED {
 		return
