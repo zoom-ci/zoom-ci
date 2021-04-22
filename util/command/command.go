@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	DEFAULT_RUM_TIMEOUT = 3600
+	DEFAULT_RUN_TIMEOUT = 3600
 )
 
 type Command struct {
@@ -30,7 +30,7 @@ type Command struct {
 
 func NewCmd(c *Command) (*Command, error) {
 	if c.Timeout == 0*time.Second {
-		c.Timeout = DEFAULT_RUM_TIMEOUT * time.Second
+		c.Timeout = DEFAULT_RUN_TIMEOUT * time.Second
 	}
 	if c.TerminateChan == nil {
 		c.TerminateChan = make(chan int)

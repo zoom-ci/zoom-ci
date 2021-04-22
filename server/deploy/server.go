@@ -7,6 +7,7 @@ package deploy
 import (
 	"fmt"
 	"path"
+	"regexp"
 
 	"github.com/zoom-ci/zoom-ci/util/command"
 )
@@ -174,28 +175,36 @@ func (srv *Server) deployCmdWithoutServer() []string {
 			srv.DeployTmpPath,
 		),
 		fmt.Sprintf(
-			"cd %s; tar -zxf %s -C %s;",
+			"cd %s; tar -zxf %s -C %s;cd %s;",
 			srv.DeployTmpPath,
 			packFileName,
+			srv.DeployPath,
 			srv.DeployPath,
 		),
 	}...)
 	if srv.PreCmd != "" {
 		cmds = append(
 			cmds,
-			fmt.Sprintf(
+			safeCmd(fmt.Sprintf(
 				"%s",
 				srv.PreCmd,
-			),
+			), srv.DeployPath),
 		)
 	}
 	if srv.PostCmd != "" {
 		cmds = append(
 			cmds,
-			fmt.Sprintf("%s",
+			safeCmd(fmt.Sprintf("%s",
 				srv.PostCmd,
-			),
+			), srv.DeployPath),
 		)
 	}
 	return cmds
+}
+
+func safeCmd(cmds string, path string) string {
+	regx1, _ := regexp.Compile(`^\..*\/`)
+	cmds = regx1.ReplaceAllString(cmds, path+"/")
+	regx2, _ := regexp.Compile(`\s{1}\..*\/`)
+	return regx2.ReplaceAllString(cmds, " "+path+"/")
 }
