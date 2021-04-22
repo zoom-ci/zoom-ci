@@ -165,7 +165,7 @@ func (install *Install) Install() error {
 		") ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;")
 
 	user := &model.User{}
-	if ok := user.Get(1); !ok {
+	if ok := user.Get(1); !ok || user.ID == 0 {
 		zoom.App.DB.DbHandler.Exec("INSERT INTO `zoom_user` (`id`, `role_id`, `username`, `password`, `salt`, `truename`, `mobile`, `email`, `status`, `last_login_time`, `last_login_ip`, `ctime`) VALUES(1, 1, 'admin', '1583514ddbb5ad4e789f6e664f7814ee', 'e6NukxZ0MX', 'Zoom', '', 'admin@zoom.com', 1, 0, '', 0);")
 	}
 
@@ -178,7 +178,7 @@ func (install *Install) Install() error {
 		") ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;")
 
 	userRole := &model.UserRole{}
-	if ok := userRole.Get(1); !ok {
+	if ok := userRole.Get(1); !ok || userRole.ID == 0 {
 		zoom.App.DB.DbHandler.Exec("INSERT INTO `zoom_user_role` (`id`, `name`, `privilege`, `ctime`) VALUES(1, '管理员', '2001,2002,2003,2004,2100,2101,2102,2201,2202,2203,2204,2205,2206,2207,2208,3001,3002,3004,3003,3101,3102,3103,3104,4001,4002,4003,4004,4101,4102,4103,4104,1001,1002,1006,1003,1004,1005,5001', 0);")
 	}
 	zoom.App.DB.DbHandler.Exec("CREATE TABLE IF NOT EXISTS `zoom_user_token` (" +

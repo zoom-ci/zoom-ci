@@ -30,7 +30,7 @@ var WebPath embed.FS
 var DefaultConfigIniFile embed.FS
 
 const (
-	Version = "v1.0.1"
+	Version = "v1.0.2"
 )
 
 func init() {

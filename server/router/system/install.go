@@ -12,8 +12,6 @@ import (
 )
 
 type InstallBind struct {
-	//WebDomain string `form:"web_domain" binding:"required"`
-	//WebPort string `form:"web_port" binding:"required"`
 	MysqlHost string `form:"mysql_host" binding:"required"`
 	MysqlPort int `form:"mysql_port" binding:"required"`
 	MysqlUsername string `form:"mysql_username" binding:"required"`
@@ -33,8 +31,6 @@ func Install(c *gin.Context) {
 	}
 
 	install := &system.Install{
-		//WebDomain:     form.WebDomain,
-		//WebPort:       form.WebPort,
 		MysqlHost:     form.MysqlHost,
 		MysqlPort:     form.MysqlPort,
 		MysqlUsername: form.MysqlUsername,
