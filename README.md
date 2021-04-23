@@ -47,12 +47,6 @@ Start Running...
   <img height="500"  src="https://zoom-ci.github.io/docs/assets/img/zoom-install.png" />
 </p>
 
-初始账号：
-```
-用户名: admin
-密码: 123456
-```
-
 ## 文档
 
 #### [https://zoom-ci.github.io/docs/](https://zoom-ci.github.io/docs/)
