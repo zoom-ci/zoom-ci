@@ -19,6 +19,9 @@ func ApiPriv() gin.HandlerFunc {
 		token, _ := c.Cookie("_zoom_identity")
 
 		path := strings.TrimSpace(c.Request.URL.Path)
+
+		zoom.App.Logger.Info(path)
+
 		if len(path) < 4 {
 			respondWithError(c, render.CODE_ERR_NO_PRIV, "request path is too short")
 			return

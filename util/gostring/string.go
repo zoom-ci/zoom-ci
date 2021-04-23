@@ -112,3 +112,12 @@ func JsonEncode(obj interface{}) []byte {
 func JsonDecode(data []byte, obj interface{}) {
 	json.Unmarshal(data, obj)
 }
+
+func GenerateUserPassword(password string) (salt string,md5 string) {
+	if password != "" {
+		salt = StrRandom(10)
+		password = StrMd5(JoinStrings(password, salt))
+		return salt,password
+	}
+	return "",""
+}

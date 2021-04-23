@@ -12,16 +12,20 @@ import (
 )
 
 type InstallBind struct {
-	MysqlHost string `form:"mysql_host" binding:"required"`
-	MysqlPort int `form:"mysql_port" binding:"required"`
+	UserName     string `form:"user_name" binding:"required"`
+	UserPassword string `form:"user_password" binding:"required"`
+	UserEmail    string `form:"user_email" binding:"required"`
+
+	MysqlHost     string `form:"mysql_host" binding:"required"`
+	MysqlPort     int    `form:"mysql_port" binding:"required"`
 	MysqlUsername string `form:"mysql_username" binding:"required"`
 	MysqlPassword string `form:"mysql_password" binding:"required"`
-	MysqlDbname string `form:"mysql_dbname" binding:"required"`
+	MysqlDbname   string `form:"mysql_dbname" binding:"required"`
 }
 
 func Install(c *gin.Context) {
 	if zoom.App.ZoomInstalled == true {
-		render.AppError(c,"installed")
+		render.AppError(c, "installed")
 		return
 	}
 	var form InstallBind
@@ -31,6 +35,10 @@ func Install(c *gin.Context) {
 	}
 
 	install := &system.Install{
+		UserName:      form.UserName,
+		UserPassword:  form.UserPassword,
+		UserEmail:     form.UserEmail,
+
 		MysqlHost:     form.MysqlHost,
 		MysqlPort:     form.MysqlPort,
 		MysqlUsername: form.MysqlUsername,

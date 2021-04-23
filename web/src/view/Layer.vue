@@ -20,6 +20,7 @@
                                 <i class="iconfont small icon-arrow-down"></i>
                             </span>
                             <el-dropdown-menu slot="dropdown" class="app-header-dropdown">
+                                <el-dropdown-item>{{$store.getters['account/getTrueName']}}</el-dropdown-item>
                                 <el-dropdown-item command="setting"><i class="iconfont small left icon-user"></i>{{ $t('personal_setting') }}</el-dropdown-item>
                                 <el-dropdown-item command="password"><i class="iconfont small left icon-key"></i>{{ $t('change_password') }}</el-dropdown-item>
                                 <a class="app-dropdown-link" href="https://zoom-ci.github.io/docs/" target="_blank">

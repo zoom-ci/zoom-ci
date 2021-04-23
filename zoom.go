@@ -56,6 +56,7 @@ type zoom struct {
 }
 
 func newZoom() *zoom {
+	gin.SetMode(gin.ReleaseMode)
 	return &zoom{
 		Gin: gin.New(),
 	}
@@ -78,6 +79,7 @@ func (s *zoom) Init(cfg *server.Config) error {
 	if err := s.initEnv(); err != nil {
 		return err
 	}
+	App.Logger.Info("init finished")
 	return nil
 }
 

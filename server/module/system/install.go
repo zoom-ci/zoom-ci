@@ -10,10 +10,15 @@ import (
 	"github.com/zoom-ci/zoom-ci"
 	"github.com/zoom-ci/zoom-ci/server"
 	"github.com/zoom-ci/zoom-ci/server/model"
+	"github.com/zoom-ci/zoom-ci/util/gostring"
 	"strconv"
 )
 
 type Install struct {
+	UserName     string
+	UserPassword string
+	UserEmail    string
+
 	MysqlHost     string
 	MysqlPort     int
 	MysqlUsername string
@@ -166,7 +171,9 @@ func (install *Install) Install() error {
 
 	user := &model.User{}
 	if ok := user.Get(1); !ok || user.ID == 0 {
-		zoom.App.DB.DbHandler.Exec("INSERT INTO `zoom_user` (`id`, `role_id`, `username`, `password`, `salt`, `truename`, `mobile`, `email`, `status`, `last_login_time`, `last_login_ip`, `ctime`) VALUES(1, 1, 'admin', '1583514ddbb5ad4e789f6e664f7814ee', 'e6NukxZ0MX', 'Zoom', '', 'admin@zoom.com', 1, 0, '', 0);")
+		salt, password := gostring.GenerateUserPassword(install.UserPassword)
+		zoom.App.DB.DbHandler.Exec(fmt.Sprintf("INSERT INTO `zoom_user` (`id`, `role_id`, `username`, `password`, `salt`, `truename`, `mobile`, `email`, `status`, `last_login_time`, `last_login_ip`, `ctime`) VALUES(1, 1, '%s', '%s', '%s', 'Admin', '', '%s', 1, 0, '', 0);",
+			install.UserName, password, salt, install.UserEmail))
 	}
 
 	zoom.App.DB.DbHandler.Exec("CREATE TABLE IF NOT EXISTS `zoom_user_role` (" +
@@ -205,7 +212,7 @@ func (install *Install) Install() error {
 	zoom.App.ConfigHandle.SetValue("database", "password", install.MysqlPassword)
 	zoom.App.ConfigHandle.SetValue("database", "dbname", install.MysqlDbname)
 
-	goconfig.SaveConfigFile(zoom.App.ConfigHandle, zoom.App.ConfigFileHandle)
+	_ = goconfig.SaveConfigFile(zoom.App.ConfigHandle, zoom.App.ConfigFileHandle)
 
 	return nil
 }
