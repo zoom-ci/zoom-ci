@@ -49,7 +49,7 @@
             <div class="app-dialog" v-loading="dialogLoading">
                 <el-form ref="dialogRef" :model="dialogForm" size="medium" label-width="80px">
                     <el-form-item 
-                        :label="$t('server_group_name')"
+                        :label="$t('cluster_name')"
                         prop="name"
                         :rules="[
                             { required: true, message: $t('name_cannot_empty'), trigger: 'blur'},

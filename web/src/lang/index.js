@@ -18,7 +18,7 @@ if (global.navigator.language) {
 if (localeLang.indexOf('en') != 0) {
     localeLang = 'zh-cn'
 }
-
+localeLang = 'en'
 const i18n = new VueI18n({
     locale: localeLang,
     messages,
