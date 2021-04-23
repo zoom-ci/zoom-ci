@@ -7,6 +7,7 @@ package system
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/zoom-ci/zoom-ci"
+	"github.com/zoom-ci/zoom-ci/server/model"
 	"github.com/zoom-ci/zoom-ci/server/module/system"
 	"github.com/zoom-ci/zoom-ci/server/render"
 )
@@ -61,6 +62,13 @@ func Install(c *gin.Context) {
 }
 
 func InstallStatus(c *gin.Context) {
+	// check the user whose id is 1 for judge the install status
+	if zoom.App.ZoomInstalled {
+		user := &model.User{}
+		if ok := user.Get(1); !ok || user.ID == 0 {
+			zoom.App.ZoomInstalled = false
+		}
+	}
 	render.JSON(c, gin.H{
 		"is_installed": zoom.App.ZoomInstalled,
 	})

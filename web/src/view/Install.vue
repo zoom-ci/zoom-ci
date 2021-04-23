@@ -12,7 +12,12 @@
           <div slot="header" class="clearfix">
             <span>快速安装</span>
             <el-button style="float: right; padding: 3px 0" type="text"
-              ><el-link type="success" href="https://zoom-ci.github.io/docs/" target="_blank">获得帮助?</el-link></el-button
+              ><el-link
+                type="success"
+                href="https://zoom-ci.github.io/docs/"
+                target="_blank"
+                >获得帮助?</el-link
+              ></el-button
             >
           </div>
 
@@ -26,7 +31,7 @@
             label-position="right"
             label-width="150px"
           >
-            <div class="install-title">Mysql 配置</div>
+            <div class="install-title">MYSQL 配置</div>
             <el-col :span="12">
               <el-form-item
                 :span="8"
@@ -36,12 +41,11 @@
               >
                 <el-input
                   v-model="installForm.mysql_host"
-                  autocomplete="off"
                 ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item prop="mysql_port" label="数据库端口" required>
+              <el-form-item prop="mysql_port" label="端口" required>
                 <el-input
                   v-model="installForm.mysql_port"
                   autocomplete="off"
@@ -49,7 +53,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item prop="mysql_username" label="数据库用户名" required>
+              <el-form-item prop="mysql_username" label="用户名" required>
                 <el-input
                   v-model="installForm.mysql_username"
                   autocomplete="off"
@@ -59,7 +63,7 @@
             <el-col :span="12">
               <el-form-item
                 prop="mysql_password"
-                label="数据库用户密码"
+                label="密码"
                 required
               >
                 <el-input
@@ -69,7 +73,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item prop="mysql_dbname" label="数据表名" required>
+              <el-form-item prop="mysql_dbname" label="数据表" required>
                 <el-input
                   v-model="installForm.mysql_dbname"
                   autocomplete="off"
@@ -81,34 +85,33 @@
               <div class="install-title">管理员 配置</div>
             </el-col>
             <el-col :span="16">
-            <el-form-item prop="user_name" label="用户名" required>
-              <el-input
-                v-model="installForm.user_name"
-              ></el-input>
-            </el-form-item>
-             </el-col>
-            <el-col :span="16">
-            <el-form-item prop="user_password" label="用户密码" required>
-              <el-input
-                v-model="installForm.user_password"
-                autocomplete="off"
-                type="password"
-              ></el-input>
-            </el-form-item>
-             </el-col>
-            <el-col :span="16">
-            <el-form-item prop="user_email" label="邮箱地址" required>
-              <el-input
-                v-model="installForm.user_email"
-              ></el-input>
-            </el-form-item>
+              <el-form-item prop="user_name" label="用户名" required>
+                <el-input v-model="installForm.user_name"></el-input>
+              </el-form-item>
             </el-col>
-             <el-col :span="16">
-            <el-form-item>
-              <el-button @click="installHandler" type="primary" style="width: 100%;">{{
-                $t("install")
-              }}</el-button>
-            </el-form-item>
+            <el-col :span="16">
+              <el-form-item prop="user_password" label="用户密码" required>
+                <el-input
+                  v-model="installForm.user_password"
+                  autocomplete="off"
+                  type="password"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="16">
+              <el-form-item prop="user_email" label="邮箱地址" required>
+                <el-input v-model="installForm.user_email"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="16">
+              <el-form-item>
+                <el-button
+                  @click="installHandler"
+                  type="primary"
+                  style="width: 100%"
+                  >{{ $t("install") }}</el-button
+                >
+              </el-form-item>
             </el-col>
           </el-form>
         </el-card>
@@ -141,10 +144,32 @@ export default {
         mysql_dbname: "",
       },
       installRules: {
-        user_name: [{ required: true, message: this.$t('please_input_loginname'), trigger: 'blur' }],
+        user_name: [
+          {
+            required: true,
+            message: this.$t("please_input_userame"),
+            trigger: "blur",
+          },
+        ],
+        user_email: [
+          {
+            required: true,
+            message: this.$t("please_input_useremail"),
+            trigger: "blur",
+          },
+        ],
         user_password: [
-            { required: true, message: this.$t('please_input_password'), trigger: 'blur' },
-            { min: 6, max: 20, message: this.$t('strlen_between', {min: 6, max: 20}), trigger: 'blur' },
+          {
+            required: true,
+            message: this.$t("please_input_password"),
+            trigger: "blur",
+          },
+          {
+            min: 6,
+            max: 20,
+            message: this.$t("strlen_between", { min: 6, max: 20 }),
+            trigger: "blur",
+          },
         ],
         mysql_host: [
           {
