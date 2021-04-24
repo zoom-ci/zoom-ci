@@ -10,15 +10,14 @@
       <div class="install-container">
         <el-card class="install-box">
           <div slot="header" class="clearfix">
-            <span>快速安装</span>
-            <el-button style="float: right; padding: 3px 0" type="text"
-              ><el-link
-                type="success"
-                href="https://zoom-ci.github.io/docs/"
-                target="_blank"
-                >获得帮助?</el-link
-              ></el-button
+            <span>{{ $t("install_title") }}</span>
+            <el-button
+              style="float: right; padding: 3px 0"
+              @click="switchLanguage"
+              type="text"
             >
+              <i class="el-icon-sort"></i>{{ $t("language") }}
+            </el-button>
           </div>
 
           <el-form
@@ -31,21 +30,23 @@
             label-position="right"
             label-width="150px"
           >
-            <div class="install-title">MYSQL 配置</div>
+            <div class="install-title">{{ $t("mysql_config_title") }}</div>
             <el-col :span="12">
               <el-form-item
                 :span="8"
                 prop="mysql_host"
-                label="主机地址"
+                :label="$t('mysql_host')"
                 required
               >
-                <el-input
-                  v-model="installForm.mysql_host"
-                ></el-input>
+                <el-input v-model="installForm.mysql_host"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item prop="mysql_port" label="端口" required>
+              <el-form-item
+                prop="mysql_port"
+                :label="$t('mysql_port')"
+                required
+              >
                 <el-input
                   v-model="installForm.mysql_port"
                   autocomplete="off"
@@ -53,7 +54,11 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item prop="mysql_username" label="用户名" required>
+              <el-form-item
+                prop="mysql_username"
+                :label="$t('mysql_username')"
+                required
+              >
                 <el-input
                   v-model="installForm.mysql_username"
                   autocomplete="off"
@@ -63,7 +68,7 @@
             <el-col :span="12">
               <el-form-item
                 prop="mysql_password"
-                label="密码"
+                :label="$t('mysql_password')"
                 required
               >
                 <el-input
@@ -73,7 +78,11 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item prop="mysql_dbname" label="数据表" required>
+              <el-form-item
+                prop="mysql_dbname"
+                :label="$t('mysql_dbname')"
+                required
+              >
                 <el-input
                   v-model="installForm.mysql_dbname"
                   autocomplete="off"
@@ -82,15 +91,19 @@
             </el-col>
 
             <el-col :span="24">
-              <div class="install-title">管理员 配置</div>
+              <div class="install-title">{{ $t("admin_config_title") }}</div>
             </el-col>
             <el-col :span="16">
-              <el-form-item prop="user_name" label="用户名" required>
+              <el-form-item prop="user_name" :label="$t('username')" required>
                 <el-input v-model="installForm.user_name"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="16">
-              <el-form-item prop="user_password" label="用户密码" required>
+              <el-form-item
+                prop="user_password"
+                :label="$t('password')"
+                required
+              >
                 <el-input
                   v-model="installForm.user_password"
                   autocomplete="off"
@@ -99,7 +112,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="16">
-              <el-form-item prop="user_email" label="邮箱地址" required>
+              <el-form-item prop="user_email" :label="$t('email')" required>
                 <el-input v-model="installForm.user_email"></el-input>
               </el-form-item>
             </el-col>
@@ -128,6 +141,7 @@
 <script>
 import { installApi, installStatusApi } from "@/api/system";
 import Code from "@/lib/code";
+import util from "@/lib/util";
 export default {
   data() {
     return {
@@ -214,6 +228,9 @@ export default {
     this.initInstallStatus();
   },
   methods: {
+    switchLanguage() {
+      util.switchLanguage();
+    },
     initInstallStatus() {
       let self = this;
       installStatusApi()

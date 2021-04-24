@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 import moment from 'moment'
 
 let loginTokenKey = '_zoom_identity'
+let languageCookieKey = '_zoom_language'
 
 export default {
 
@@ -100,6 +101,24 @@ export default {
             postfix = "..."
         }
         return str.substr(0, len) + postfix
+    },
+
+    SetLanguage(language) {
+        return Cookies.set(languageCookieKey, language)
+    },
+
+    GetLanguage() {
+        return Cookies.get(languageCookieKey)
+    },
+    switchLanguage() {
+        let localeLang
+        if (this.GetLanguage() != 'en') {
+            localeLang = "en"
+        } else {
+            localeLang = "zh-cn"
+        }
+        this.SetLanguage(localeLang)
+        location.reload()
     },
 
     SetLoginToken(token) {
