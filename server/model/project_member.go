@@ -16,7 +16,7 @@ type ProjectMember struct {
 }
 
 func (m *ProjectMember) TableName() string {
-	return "zoom_project_member"
+	return GetTableName("project_member")
 }
 
 func (m *ProjectMember) Create() bool {

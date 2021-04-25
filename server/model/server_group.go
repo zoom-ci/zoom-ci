@@ -15,7 +15,7 @@ type ServerGroup struct {
 }
 
 func (m *ServerGroup) TableName() string {
-	return "zoom_server_group"
+	return GetTableName("server_group")
 }
 
 func (m *ServerGroup) Create() bool {

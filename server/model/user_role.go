@@ -16,7 +16,7 @@ type UserRole struct {
 }
 
 func (m *UserRole) TableName() string {
-	return "zoom_user_role"
+	return GetTableName("user_role")
 }
 
 func (m *UserRole) Create() bool {

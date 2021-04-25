@@ -5,6 +5,7 @@
 package system
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/zoom-ci/zoom-ci"
 	"github.com/zoom-ci/zoom-ci/server/model"
@@ -72,4 +73,13 @@ func InstallStatus(c *gin.Context) {
 	render.JSON(c, gin.H{
 		"is_installed": zoom.App.ZoomInstalled,
 	})
+}
+
+func UpgradeFromSyncd() {
+	fmt.Println("Start Upgrading from Syncd2.0 ...")
+	// 表前缀配置增加
+	// 配置增加app name，修改cipher字段
+	// 表字段修改
+
+
 }

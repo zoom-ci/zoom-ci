@@ -37,6 +37,7 @@ func (install *Install) Install() error {
 		User:            install.MysqlUsername,
 		Pass:            install.MysqlPassword,
 		DbName:          install.MysqlDbname,
+		Prefix:          zoom.App.Config.Db.Prefix,
 		MaxIdleConns:    zoom.App.Config.Db.MaxIdleConns,
 		MaxOpenConns:    zoom.App.Config.Db.MaxOpenConns,
 		ConnMaxLifeTime: zoom.App.Config.Db.ConnMaxLifeTime,

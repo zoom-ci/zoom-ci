@@ -17,7 +17,7 @@ type UserToken struct {
 }
 
 func (m *UserToken) TableName() string {
-	return "zoom_user_token"
+	return GetTableName("user_token")
 }
 
 func (m *UserToken) Create() bool {
