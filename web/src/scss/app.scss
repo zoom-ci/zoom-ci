@@ -327,10 +327,10 @@ html, body {
         }
     }
     .layer-container {
+        height: calc(100% - 50px);
         margin-left: 200px;
         overflow: hidden;
         overflow-y: auto;
-        height: calc(100% - 50px);
         background: #f0f2f5;
         .layer-aside {
             border-right: solid 1px #e6e6e6;
