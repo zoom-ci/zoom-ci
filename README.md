@@ -42,16 +42,10 @@ HTTP Service:         :7002
 Start Running...
 ```
 
-2、打开浏览器，访问 `http://localhost:7002` (出现下图界面)，配置数据库，安装完成。
+2、打开浏览器，访问 `http://localhost:7002` (出现下图界面)，配置数据库及管理员信息，安装完成。
 <p style="margin: 20px 0 40px 0;">
   <img height="500"  src="https://zoom-ci.github.io/docs/assets/img/zoom-install.png" />
 </p>
-
-初始账号：
-```
-用户名: admin
-密码: 123456
-```
 
 ## 文档
 

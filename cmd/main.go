@@ -12,16 +12,18 @@ import (
 	"github.com/zoom-ci/zoom-ci"
 	"github.com/zoom-ci/zoom-ci/server"
 	"github.com/zoom-ci/zoom-ci/server/router/route"
+	"github.com/zoom-ci/zoom-ci/server/router/system"
 	"github.com/zoom-ci/zoom-ci/util/gopath"
 	"log"
 	"os"
 )
 
 var (
-	helpFlag      bool
-	zoomIniFlag   string
-	versionFlag   bool
-	configFile    *goconfig.ConfigFile
+	helpFlag    bool
+	zoomIniFlag string
+	versionFlag bool
+	configFile  *goconfig.ConfigFile
+	upgradeFlag string
 )
 
 func init() {
@@ -30,6 +32,7 @@ func init() {
 	flag.BoolVar(&helpFlag, "h", false, "This help")
 	flag.StringVar(&zoomIniFlag, "c", "", "Set configuration file `file`")
 	flag.BoolVar(&versionFlag, "v", false, "Version number")
+	flag.StringVar(&upgradeFlag, "upgrade", "", "Upgrade")
 
 	flag.Usage = usage
 	flag.Parse()
@@ -81,9 +84,9 @@ func findZoomIniFile() string {
 	defaultConfigFile, _ := zoom.DefaultConfigIniFile.ReadFile("resource/zoom.sample.ini")
 	saveDefaultConfigResult := gopath.SaveFile(iniFile, defaultConfigFile)
 	if saveDefaultConfigResult != nil {
-		outputInfo("Default Config","load error")
+		outputInfo("Default Config", "load error")
 	} else {
-		outputInfo("Default Config","load success")
+		outputInfo("Default Config", "load success")
 	}
 	return iniFile
 }
@@ -135,6 +138,7 @@ func main() {
 			User:            configOrDefault("database", "user", ""),
 			Pass:            configOrDefault("database", "password", ""),
 			DbName:          configOrDefault("database", "dbname", ""),
+			Prefix:          configOrDefault("database", "prefix", "zoom_"),
 			MaxIdleConns:    configIntOrDefault("database", "max_idle_conns", 100),
 			MaxOpenConns:    configIntOrDefault("database", "max_open_conns", 200),
 			ConnMaxLifeTime: configIntOrDefault("database", "conn_max_life_time", 500),
@@ -164,6 +168,13 @@ func main() {
 
 	if err := zoom.App.Init(cfg); err != nil {
 		log.Fatal(err)
+	}
+
+	// process upgrade logic
+	if upgradeFlag != "" {
+		if upgradeFlag == "syncd" {
+			system.UpgradeFromSyncd()
+		}
 	}
 
 	route.RegisterRoute()

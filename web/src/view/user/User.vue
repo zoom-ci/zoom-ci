@@ -71,7 +71,7 @@
 
         <el-dialog :width="$root.DialogSmallWidth" :title="dialogTitle" :visible.sync="dialogVisible" @close="dialogCloseHandler">
             <div class="app-dialog" v-loading="dialogLoading">
-                <el-form class="app-form" ref="dialogRef" :model="dialogForm" size="medium" label-width="80px">
+                <el-form class="app-form" ref="dialogRef" :model="dialogForm" size="medium" label-width="100px">
                     <el-form-item 
                     :label="$t('role')"
                     prop="role_id"

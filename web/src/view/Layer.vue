@@ -20,8 +20,10 @@
                                 <i class="iconfont small icon-arrow-down"></i>
                             </span>
                             <el-dropdown-menu slot="dropdown" class="app-header-dropdown">
+                                <el-dropdown-item>{{$store.getters['account/getTrueName']}}</el-dropdown-item>
                                 <el-dropdown-item command="setting"><i class="iconfont small left icon-user"></i>{{ $t('personal_setting') }}</el-dropdown-item>
-                                <el-dropdown-item command="password"><i class="iconfont small left icon-key"></i>{{ $t('change_password') }}</el-dropdown-item>
+                                <el-dropdown-item command="password"><i class="iconfont small left icon-key"></i>{{ $t('password') }}</el-dropdown-item>
+                                <el-dropdown-item command="language"><i class="el-icon-sort"></i>{{ $t('language') }}</el-dropdown-item>
                                 <a class="app-dropdown-link" href="https://zoom-ci.github.io/docs/" target="_blank">
                                     <el-dropdown-item divided><i class="iconfont small left icon-pull-request"></i>{{ $t('zoom_document') }}</el-dropdown-item>
                                 </a>
@@ -123,9 +125,9 @@
             </div>
         </el-dialog>
 
-        <el-dialog :width="$root.DialogSmallWidth" title="修改密码" :visible.sync="passwordDialogVisible"
+        <el-dialog :width="$root.DialogSmallWidth" :title="$t('change_password')" :visible.sync="passwordDialogVisible"
                    @close="closePasswordSettingDialogHandler">
-            <el-form class="app-form" ref="passwordDialogRef" :model="passwordForm" size="medium" label-width="80px">
+            <el-form class="app-form" ref="passwordDialogRef" :model="passwordForm" size="medium" label-width="150px">
                 <el-form-item
                         :label="$t('current_password')"
                         prop="password"
@@ -162,6 +164,7 @@
     import ScrollBar from '@/component/ScrollBar';
     import {routerMap} from '@/router'
     import Code from '@/lib/code'
+    import util from '@/lib/util'
     import {loginStatusApi, logoutApi} from '@/api/login'
     import {installStatusApi} from '@/api/system'
     import {userPasswordApi, userSettingApi} from '@/api/user'
@@ -222,6 +225,9 @@
                         break
                     case 'password':
                         this.showPasswordSettingDialogHandler()
+                        break
+                    case 'language':
+                        util.switchLanguage()
                         break
                 }
             },

@@ -16,7 +16,7 @@ type ProjectSpace struct {
 }
 
 func (m *ProjectSpace) TableName() string {
-	return "zoom_project_space"
+	return GetTableName("project_space")
 }
 
 func (m *ProjectSpace) Create() bool {

@@ -27,7 +27,7 @@ type DeployApply struct {
 }
 
 func (m *DeployApply) TableName() string {
-	return "zoom_deploy_apply"
+	return GetTableName("deploy_apply")
 }
 
 func (m *DeployApply) Create() bool {

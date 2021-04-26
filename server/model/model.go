@@ -26,6 +26,10 @@ type QueryParam struct {
 	Where  []WhereParam
 }
 
+func GetTableName(tablename string) string {
+	return fmt.Sprintf("%s%s", zoom.App.Config.Db.Prefix, tablename)
+}
+
 func Create(model interface{}) bool {
 	db := zoom.App.DB.DbHandler.Create(model)
 	if err := db.Error; err != nil {

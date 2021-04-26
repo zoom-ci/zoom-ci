@@ -5,23 +5,29 @@
 package system
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/zoom-ci/zoom-ci"
+	"github.com/zoom-ci/zoom-ci/server/model"
 	"github.com/zoom-ci/zoom-ci/server/module/system"
 	"github.com/zoom-ci/zoom-ci/server/render"
 )
 
 type InstallBind struct {
-	MysqlHost string `form:"mysql_host" binding:"required"`
-	MysqlPort int `form:"mysql_port" binding:"required"`
+	UserName     string `form:"user_name" binding:"required"`
+	UserPassword string `form:"user_password" binding:"required"`
+	UserEmail    string `form:"user_email" binding:"required"`
+
+	MysqlHost     string `form:"mysql_host" binding:"required"`
+	MysqlPort     int    `form:"mysql_port" binding:"required"`
 	MysqlUsername string `form:"mysql_username" binding:"required"`
 	MysqlPassword string `form:"mysql_password" binding:"required"`
-	MysqlDbname string `form:"mysql_dbname" binding:"required"`
+	MysqlDbname   string `form:"mysql_dbname" binding:"required"`
 }
 
 func Install(c *gin.Context) {
 	if zoom.App.ZoomInstalled == true {
-		render.AppError(c,"installed")
+		render.AppError(c, "installed")
 		return
 	}
 	var form InstallBind
@@ -31,6 +37,10 @@ func Install(c *gin.Context) {
 	}
 
 	install := &system.Install{
+		UserName:      form.UserName,
+		UserPassword:  form.UserPassword,
+		UserEmail:     form.UserEmail,
+
 		MysqlHost:     form.MysqlHost,
 		MysqlPort:     form.MysqlPort,
 		MysqlUsername: form.MysqlUsername,
@@ -53,7 +63,23 @@ func Install(c *gin.Context) {
 }
 
 func InstallStatus(c *gin.Context) {
+	// check the user whose id is 1 for judge the install status
+	if zoom.App.ZoomInstalled {
+		user := &model.User{}
+		if ok := user.Get(1); !ok || user.ID == 0 {
+			zoom.App.ZoomInstalled = false
+		}
+	}
 	render.JSON(c, gin.H{
 		"is_installed": zoom.App.ZoomInstalled,
 	})
+}
+
+func UpgradeFromSyncd() {
+	fmt.Println("Start Upgrading from Syncd2.0 ...")
+	// 表前缀配置增加
+	// 配置增加app name，修改cipher字段
+	// 表字段修改
+
+
 }

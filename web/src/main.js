@@ -16,10 +16,15 @@ if (global.navigator.language) {
     localeLang = global.navigator.language
     localeLang = localeLang.toLowerCase()
 }
-if (localeLang.indexOf('en') != 0) {
+if (localeLang.indexOf('en') != 0 && util.GetLanguage() != 'en') {
     localeLang = 'zh-cn'
+} else {
+    localeLang = 'en'
 }
+util.SetLanguage(localeLang)
+
 moment.locale(localeLang)
+
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 

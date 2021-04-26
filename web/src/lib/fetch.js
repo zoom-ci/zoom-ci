@@ -40,12 +40,11 @@ service.interceptors.response.use(response => {
                 Vue.prototype.$message.error(res.message)
                 break
             case Code.CODE_ERR_NO_PRIV:
-                Vue.prototype.$message.error('无操作权限')
-                //Router.push({name: 'dashboard'})
+                Vue.prototype.$message.error(i18n.t("no_permission"))
                 break
             case Code.CODE_ERR_NO_LOGIN:
                 Vue.prototype.$message({
-                    message: '用户未登录',
+                    message: i18n.t("not_login"),
                     type: 'error',
                     duration: 1000,
                     onClose: () => {

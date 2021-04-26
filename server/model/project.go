@@ -33,7 +33,7 @@ type Project struct {
 }
 
 func (m *Project) TableName() string {
-	return "zoom_project"
+	return GetTableName("project")
 }
 
 func (m *Project) Create() bool {

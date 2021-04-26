@@ -24,7 +24,7 @@ type User struct {
 }
 
 func (m *User) TableName() string {
-	return "zoom_user"
+	return GetTableName("user")
 }
 
 func (m *User) Create() bool {

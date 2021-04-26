@@ -229,8 +229,7 @@ func (u *User) UserCheckExists() (bool, error) {
 
 func (u *User) UpdatePassword() error {
 	user := &model.User{}
-	salt := gostring.StrRandom(10)
-	password := gostring.StrMd5(gostring.JoinStrings(u.Password, salt))
+	salt, password := gostring.GenerateUserPassword(u.Password)
 	updateData := map[string]interface{}{
 		"password": password,
 		"salt":     salt,
@@ -252,8 +251,7 @@ func (u *User) UpdatePassword() error {
 func (u *User) CreateOrUpdate() error {
 	var salt, password string
 	if u.Password != "" {
-		salt = gostring.StrRandom(10)
-		password = gostring.StrMd5(gostring.JoinStrings(u.Password, salt))
+		salt, password = gostring.GenerateUserPassword(u.Password)
 	}
 	user := &model.User{
 		ID:       u.ID,

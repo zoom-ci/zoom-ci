@@ -414,7 +414,7 @@
                         <i class="iconfont icon-dot"></i><span class="code">${env_pack_file}</span> - <span v-html="$t('build_script_env_pack_file')"></span>
                     </p>
                     <p>
-                        <a href="https://github.com/zoom-ci/zoom-ci/" class="app-link" target="_blank">{{ $t('view_build_script_eg') }}</a>
+                        <a href="https://zoom-ci.github.io/docs/#/build/" class="app-link" target="_blank">{{ $t('view_build_script_eg') }}</a>
                     </p>
                 </div>
                 <div slot="footer" class="dialog-footer">

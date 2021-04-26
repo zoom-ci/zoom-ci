@@ -9,7 +9,17 @@
     <div class="app-install-inner">
       <div class="install-container">
         <el-card class="install-box">
-          <div class="install-title">快速安装</div>
+          <div slot="header" class="clearfix">
+            <span>{{ $t("install_title") }}</span>
+            <el-button
+              style="float: right; padding: 3px 0"
+              @click="switchLanguage"
+              type="text"
+            >
+              <i class="el-icon-sort"></i>{{ $t("language") }}
+            </el-button>
+          </div>
+
           <el-form
             @keyup.enter.native="installHandler"
             ref="installFormRef"
@@ -20,41 +30,102 @@
             label-position="right"
             label-width="150px"
           >
-            <el-form-item prop="mysql_host" label="Mysql Host" required>
-              <el-input
-                v-model="installForm.mysql_host"
-                autocomplete="off"
-              ></el-input>
-            </el-form-item>
-            <el-form-item prop="mysql_port" label="Mysql Port" required>
-              <el-input
-                v-model="installForm.mysql_port"
-                autocomplete="off"
-              ></el-input>
-            </el-form-item>
-            <el-form-item prop="mysql_username" label="Mysql Username" required>
-              <el-input
-                v-model="installForm.mysql_username"
-                autocomplete="off"
-              ></el-input>
-            </el-form-item>
-            <el-form-item prop="mysql_password" label="Mysql Password" required>
-              <el-input
-                v-model="installForm.mysql_password"
-                autocomplete="off"
-              ></el-input>
-            </el-form-item>
-            <el-form-item prop="mysql_dbname" label="Mysql Dbname" required>
-              <el-input
-                v-model="installForm.mysql_dbname"
-                autocomplete="off"
-              ></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button @click="installHandler" type="primary">{{
-                $t("install")
-              }}</el-button>
-            </el-form-item>
+            <div class="install-title">{{ $t("mysql_config_title") }}</div>
+            <el-col :span="12">
+              <el-form-item
+                :span="8"
+                prop="mysql_host"
+                :label="$t('mysql_host')"
+                required
+              >
+                <el-input v-model="installForm.mysql_host"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item
+                prop="mysql_port"
+                :label="$t('mysql_port')"
+                required
+              >
+                <el-input
+                  v-model="installForm.mysql_port"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item
+                prop="mysql_username"
+                :label="$t('mysql_username')"
+                required
+              >
+                <el-input
+                  v-model="installForm.mysql_username"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item
+                prop="mysql_password"
+                :label="$t('mysql_password')"
+                required
+              >
+                <el-input
+                  v-model="installForm.mysql_password"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item
+                prop="mysql_dbname"
+                :label="$t('mysql_dbname')"
+                required
+              >
+                <el-input
+                  v-model="installForm.mysql_dbname"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="24">
+              <div class="install-title">{{ $t("admin_config_title") }}</div>
+            </el-col>
+            <el-col :span="16">
+              <el-form-item prop="user_name" :label="$t('username')" required>
+                <el-input v-model="installForm.user_name"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="16">
+              <el-form-item
+                prop="user_password"
+                :label="$t('password')"
+                required
+              >
+                <el-input
+                  v-model="installForm.user_password"
+                  autocomplete="off"
+                  type="password"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="16">
+              <el-form-item prop="user_email" :label="$t('email')" required>
+                <el-input v-model="installForm.user_email"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="16">
+              <el-form-item>
+                <el-button
+                  @click="installHandler"
+                  type="primary"
+                  style="width: 100%"
+                  >{{ $t("install") }}</el-button
+                >
+              </el-form-item>
+            </el-col>
           </el-form>
         </el-card>
       </div>
@@ -70,18 +141,50 @@
 <script>
 import { installApi, installStatusApi } from "@/api/system";
 import Code from "@/lib/code";
+import util from "@/lib/util";
 export default {
   data() {
     return {
       installLoadding: false,
       installForm: {
+        user_name: "",
+        user_password: "",
+        user_email: "",
+
         mysql_host: "127.0.0.1",
         mysql_port: "3306",
-        mysql_username: "zoom",
-        mysql_password: "zoom",
-        mysql_dbname: "zoom",
+        mysql_username: "",
+        mysql_password: "",
+        mysql_dbname: "",
       },
       installRules: {
+        user_name: [
+          {
+            required: true,
+            message: this.$t("please_input_userame"),
+            trigger: "blur",
+          },
+        ],
+        user_email: [
+          {
+            required: true,
+            message: this.$t("please_input_useremail"),
+            trigger: "blur",
+          },
+        ],
+        user_password: [
+          {
+            required: true,
+            message: this.$t("please_input_password"),
+            trigger: "blur",
+          },
+          {
+            min: 6,
+            max: 20,
+            message: this.$t("strlen_between", { min: 6, max: 20 }),
+            trigger: "blur",
+          },
+        ],
         mysql_host: [
           {
             required: true,
@@ -125,6 +228,9 @@ export default {
     this.initInstallStatus();
   },
   methods: {
+    switchLanguage() {
+      util.switchLanguage();
+    },
     initInstallStatus() {
       let self = this;
       installStatusApi()
@@ -143,6 +249,10 @@ export default {
           return false;
         }
         let postData = {
+          user_name: this.installForm.user_name,
+          user_password: this.$root.Md5Sum(this.installForm.user_password),
+          user_email: this.installForm.user_email,
+
           mysql_host: this.installForm.mysql_host,
           mysql_port: this.installForm.mysql_port,
           mysql_username: this.installForm.mysql_username,

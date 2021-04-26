@@ -18,7 +18,7 @@ type DeployTask struct {
 }
 
 func (m *DeployTask) TableName() string {
-	return "zoom_deploy_task"
+	return GetTableName("deploy_task")
 }
 
 func (m *DeployTask) List(query QueryParam) ([]DeployTask, bool) {

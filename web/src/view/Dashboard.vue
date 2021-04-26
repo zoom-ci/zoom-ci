@@ -1,18 +1,19 @@
 <template>
   <el-card class="box-card">
     <el-row :gutter="30">
-      <el-col :span="14">
+      <el-col :span="16">
         <el-calendar v-model="value"> </el-calendar>
       </el-col>
-      <el-col :span="10">
+      <el-col :span="8">
         <el-card class="box-card" shadow="hover" style="margin-bottom: 20px;">
           <div slot="header" class="clearfix">
-            <span>系统信息</span>
+            <span>{{ $t('system_info') }}</span>
           </div>
-          <div class="text item" style="margin-bottom: 10px;">本地工作空间：{{ localSpacePath }}</div>
-          <div class="text item" style="margin-bottom: 10px;">远端工作空间：{{ remoteSpacePath }}</div>
-          <div class="text item" style="margin-bottom: 10px;">当前配置地址：{{ currentConfigFilePath }}</div>
-          <div class="text item" style="margin-bottom: 10px;">当前版本：{{ currentZoomVersion }}</div>
+          <el-tooltip effect="dark" :content="$t('current_config_file_path') + ': ' + currentConfigFilePath" placement="top">          
+            <div class="text item" style="margin-bottom: 10px;">{{ $t('local_space') }}：{{ localSpacePath }}</div>
+          </el-tooltip>
+          <div class="text item" style="margin-bottom: 10px;">{{ $t('remote_space') }}：{{ remoteSpacePath }}</div>
+          <div class="text item" style="margin-bottom: 10px;">{{ $t('version') }}：{{ currentZoomVersion }}</div>
         </el-card>
       </el-col>
     </el-row>

@@ -323,10 +323,6 @@ html, body {
                         margin-left: 3px;
                     }
                 }
-                .avatar {
-                    width: 26px;
-                    border-radius: 4px;
-                }
             }
         }
     }
@@ -366,13 +362,7 @@ html, body {
         }
     }
 }
-.app-avatar {
-    border-radius: 6px;
-    &.normal{
-        width: 64px;
-        height: 64px;
-    }
-}
+
 .app-input-help {
     font-size: 12px;
     color: rgba(0,0,0,.45);

@@ -18,7 +18,7 @@ type Server struct {
 }
 
 func (m *Server) TableName() string {
-	return "zoom_server"
+	return GetTableName("server")
 }
 
 func (m *Server) Create() bool {

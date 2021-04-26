@@ -180,7 +180,7 @@
         @close="closeDialogBuildHandler">
             <div v-if="buildDetail.status == $root.BuildStatusFailed"><i class="app-color-error el-icon-warning"></i> {{ $t('build_failed') }}: <span v-if="buildDetail.errmsg" class="app-color-error">{{ buildDetail.errmsg }}</span></div>
             <div v-if="buildDetail.status == $root.BuildStatusSuccess"><i class="app-color-success el-icon-success"></i> {{ $t('build_finish') }}</div>
-            <div v-if="buildDetail.status == $root.BuildStatusStart"><i class="app-color-info el-icon-info"></i> {{ $t('build_ing') }}</div>
+            <div v-if="buildDetail.status == $root.BuildStatusStart"><i class="app-color-info el-icon-info"></i> {{ $t('building') }}</div>
             <div class="app-terminal-log">
                 <template v-for="(cmd, index) in buildDetail.output">
                     <div :key="index">

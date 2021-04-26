@@ -21,7 +21,7 @@ type DeployBuild struct {
 }
 
 func (m *DeployBuild) TableName() string {
-	return "zoom_deploy_build"
+	return GetTableName("deploy_build")
 }
 
 func (m *DeployBuild) GetByApplyId(id int) bool {
