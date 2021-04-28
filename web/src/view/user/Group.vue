@@ -64,10 +64,14 @@
                             <template v-for="(privGroup, index) in privilegeList">
                                 <el-row :key="index" class="app-mt-line">
                                     <el-col :span="3">
-                                        <span class="app-label">{{ privGroup.label }}</span>
+                                        <span class="app-label" v-if="language=='en'">{{ privGroup.label_en }}</span>
+                                        <span class="app-label" v-else>{{ privGroup.label }}</span>
                                     </el-col>
                                     <el-col :span="21">
-                                        <el-checkbox v-for="priv in privGroup.items" :label="priv.value" :key="priv.value">{{priv.label}}</el-checkbox>
+                                        <el-checkbox v-for="priv in privGroup.items" :label="priv.value" :key="priv.value">
+                                            <span v-if="language=='en'">{{priv.label_en}}</span>
+                                            <span v-else>{{priv.label}}</span>
+                                            </el-checkbox>
                                     </el-col>
                                 </el-row>
                             </template>
@@ -86,6 +90,7 @@
 
 <script>
 import { privListApi, newRoleApi, listRoleApi, detailRoleApi, updateRoleApi, deleteRoleApi } from '@/api/user'
+import util from '@/lib/util'
 export default {
     data() {
         return {
@@ -107,6 +112,7 @@ export default {
             privCheckAll: false,
 
             privilegeList: [],
+            language: util.GetLanguage()
         }
     },
     watch: {

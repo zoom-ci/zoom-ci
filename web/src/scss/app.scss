@@ -297,11 +297,14 @@ html, body {
         justify-content: space-between;
         align-items: center;
         .header-left {
+
+            text-decoration : none;
             .logo {
                 .svg-logo {
                     margin-left: 25px;
                     height: 30px;
                     color: #fff;
+                    margin-top:10px;
                 }
             }
         }

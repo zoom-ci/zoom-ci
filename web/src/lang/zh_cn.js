@@ -310,4 +310,7 @@ export default {
     'local_space':'本地工作空间',
     'remote_space':'本地工作空间',
     'system_info':'系统信息',
+    'contact_admin_for_change_username':'修改用户名请联系管理员',
+    'contact_admin_for_change_useremail':'修改邮箱请联系管理员',
+    'current_password_error':'当前密码错误，请重新输入',
 }

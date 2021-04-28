@@ -102,7 +102,7 @@ func welcome() {
 	fmt.Println(" -------/-----__----__---_--_-")
 	fmt.Println("       /    /   ) /   ) / /  )")
 	fmt.Println(" ____(_____(___/_(___/_/_/__/_")
-	fmt.Println("     / Zoom,a CI/CD service.  ")
+	fmt.Println("     /   Make CI/CD Easier.   ")
 	fmt.Println(" (_ /                         ")
 	fmt.Println("")
 	outputInfo("Service", "zoom")

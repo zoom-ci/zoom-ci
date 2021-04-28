@@ -37,9 +37,9 @@ func Install(c *gin.Context) {
 	}
 
 	install := &system.Install{
-		UserName:      form.UserName,
-		UserPassword:  form.UserPassword,
-		UserEmail:     form.UserEmail,
+		UserName:     form.UserName,
+		UserPassword: form.UserPassword,
+		UserEmail:    form.UserEmail,
 
 		MysqlHost:     form.MysqlHost,
 		MysqlPort:     form.MysqlPort,
@@ -76,10 +76,11 @@ func InstallStatus(c *gin.Context) {
 }
 
 func UpgradeFromSyncd() {
-	fmt.Println("Start Upgrading from Syncd2.0 ...")
-	// 表前缀配置增加
-	// 配置增加app name，修改cipher字段
-	// 表字段修改
-
-
+	fmt.Print("Start Upgrading from Syncd2.0 ... ")
+	result := system.UpgradeFromSyncd()
+	if result{
+		fmt.Println("OK")
+	} else {
+		fmt.Println("no need!")
+	}
 }

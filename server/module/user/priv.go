@@ -238,13 +238,15 @@ var privToApiMap = map[int][]string{
 }
 
 type PrivItem struct {
-	Label string `json:"label"`
-	Value int    `json:"value"`
+	Label   string `json:"label"`
+	LabelEn string `json:"label_en"`
+	Value   int    `json:"value"`
 }
 
 type PrivGroup struct {
-	Label string     `json:"label"`
-	Items []PrivItem `json:"items"`
+	Label   string     `json:"label"`
+	LabelEn string     `json:"label_en"`
+	Items   []PrivItem `json:"items"`
 }
 
 var PrivList = []PrivGroup{
@@ -252,66 +254,82 @@ var PrivList = []PrivGroup{
 }
 
 var privProject = PrivGroup{
-	Label: "项目",
+	Label:   "项目",
+	LabelEn: "Project",
 	Items: []PrivItem{
 		PrivItem{
 			Label: "空间-查看",
+			LabelEn:"Space-View",
 			Value: PROJECT_SPACE_VIEW,
 		},
 		PrivItem{
 			Label: "空间-新增",
+			LabelEn:"Space-Add",
 			Value: PROJECT_SPACE_NEW,
 		},
 		PrivItem{
 			Label: "空间-编辑",
+			LabelEn:"Space-Edit",
 			Value: PROJECT_SPACE_EDIT,
 		},
 		PrivItem{
 			Label: "空间-删除",
+			LabelEn:"Space-Delete",
 			Value: PROJECT_SPACE_DEL,
 		},
 		PrivItem{
 			Label: "成员-查看",
+			LabelEn:"User-View",
 			Value: PROJECT_USER_VIEW,
 		},
 		PrivItem{
 			Label: "成员-新增",
+			LabelEn:"User-Add",
 			Value: PROJECT_USER_NEW,
 		},
 		PrivItem{
 			Label: "成员-移除",
+			LabelEn:"User-Remove",
 			Value: PROJECT_USER_DEL,
 		},
 		PrivItem{
 			Label: "项目-查看",
+			LabelEn:"Project-View",
 			Value: PROJECT_VIEW,
 		},
 		PrivItem{
 			Label: "项目-新增",
+			LabelEn:"Project-Add",
 			Value: PROJECT_NEW,
 		},
 		PrivItem{
 			Label: "项目-编辑",
+			LabelEn:"Project-Edit",
 			Value: PROJECT_EDIT,
 		},
 		PrivItem{
 			Label: "项目-删除",
+			LabelEn:"Project-Delete",
 			Value: PROJECT_DEL,
 		},
 		PrivItem{
 			Label: "项目-启用",
+			LabelEn:"Project-Enable",
 			Value: PROJECT_AUDIT,
 		},
 		PrivItem{
 			Label: "项目-构建设置",
+			LabelEn:"Project-Build",
 			Value: PROJECT_BUILD,
 		},
 		PrivItem{
 			Label: "项目-Hook设置",
+			LabelEn:"Project-Hook",
 			Value: PROJECT_HOOK,
 		},
 		PrivItem{
 			Label: "项目-复制",
+			LabelEn:"Project-Copy",
 			Value: PROJECT_COPY,
 		},
 	},
@@ -319,37 +337,46 @@ var privProject = PrivGroup{
 
 var privUser = PrivGroup{
 	Label: "用户",
+	LabelEn: "User",
 	Items: []PrivItem{
 		PrivItem{
 			Label: "角色-查看",
+			LabelEn:"Role-View",
 			Value: USER_ROLE_VIEW,
 		},
 		PrivItem{
 			Label: "角色-新增",
+			LabelEn:"Role-Add",
 			Value: USER_ROLE_NEW,
 		},
 		PrivItem{
 			Label: "角色-删除",
+			LabelEn:"Role-Delete",
 			Value: USER_ROLE_DEL,
 		},
 		PrivItem{
 			Label: "角色-编辑",
+			LabelEn:"Role-Edit",
 			Value: USER_ROLE_EDIT,
 		},
 		PrivItem{
 			Label: "用户-查看",
+			LabelEn:"User-View",
 			Value: USER_VIEW,
 		},
 		PrivItem{
 			Label: "用户-新增",
+			LabelEn:"User-Add",
 			Value: USER_NEW,
 		},
 		PrivItem{
 			Label: "用户-编辑",
+			LabelEn:"User-Edit",
 			Value: USER_EDIT,
 		},
 		PrivItem{
 			Label: "用户-删除",
+			LabelEn:"User-Delete",
 			Value: USER_DEL,
 		},
 	},
@@ -357,37 +384,46 @@ var privUser = PrivGroup{
 
 var privServer = PrivGroup{
 	Label: "服务器",
+	LabelEn: "Server",
 	Items: []PrivItem{
 		PrivItem{
 			Label: "集群-查看",
+			LabelEn:"Group-View",
 			Value: SERVER_GROUP_VIEW,
 		},
 		PrivItem{
 			Label: "集群-新增",
+			LabelEn:"Group-Add",
 			Value: SERVER_GROUP_NEW,
 		},
 		PrivItem{
 			Label: "集群-编辑",
+			LabelEn:"Group-Edit",
 			Value: SERVER_GROUP_EDIT,
 		},
 		PrivItem{
 			Label: "集群-删除",
+			LabelEn:"Group-Delete",
 			Value: SERVER_GROUP_DEL,
 		},
 		PrivItem{
 			Label: "服务器-查看",
+			LabelEn:"Server-View",
 			Value: SERVER_VIEW,
 		},
 		PrivItem{
 			Label: "服务器-新增",
+			LabelEn:"Server-Add",
 			Value: SERVER_NEW,
 		},
 		PrivItem{
 			Label: "服务器-编辑",
+			LabelEn:"Server-Edit",
 			Value: SERVER_EDIT,
 		},
 		PrivItem{
 			Label: "服务器-删除",
+			LabelEn:"Server-Delete",
 			Value: SERVER_DEL,
 		},
 	},
@@ -395,29 +431,36 @@ var privServer = PrivGroup{
 
 var privDeploy = PrivGroup{
 	Label: "发布",
+	LabelEn: "Deploy",
 	Items: []PrivItem{
 		PrivItem{
 			Label: "上线单-提交申请",
+			LabelEn:"Deploy-New",
 			Value: DEPLOY_APPLY,
 		},
 		PrivItem{
 			Label: "上线单-查看",
+			LabelEn:"Apply-View",
 			Value: DEPLOY_VIEW,
 		},
 		PrivItem{
 			Label: "上线单-编辑",
+			LabelEn:"Apply-Edit",
 			Value: DEPLOY_EDIT,
 		},
 		PrivItem{
 			Label: "上线单-审核",
+			LabelEn:"Apply-Audit",
 			Value: DEPLOY_AUDIT,
 		},
 		PrivItem{
 			Label: "上线单-部署",
+			LabelEn:"Apply-Deploy",
 			Value: DEPLOY_DEPLOY,
 		},
 		PrivItem{
 			Label: "上线单-废弃",
+			LabelEn:"Apply-Drop",
 			Value: DEPLOY_DROP,
 		},
 	},
@@ -425,9 +468,11 @@ var privDeploy = PrivGroup{
 
 var privSystem = PrivGroup{
 	Label: "系统",
+	LabelEn: "System",
 	Items: []PrivItem{
 		PrivItem{
 			Label: "系统-状态",
+			LabelEn:"System-Status",
 			Value: SYSTEM_STATUS,
 		},
 	},

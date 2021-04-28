@@ -217,3 +217,25 @@ func (install *Install) Install() error {
 
 	return nil
 }
+
+func UpgradeFromSyncd() bool {
+	if zoom.App.Config.Db.Prefix != "syd_" {
+		return false
+	}
+
+	// config
+	zoom.App.Config.Zoom.AppName = "Zoom-CI"
+	zoom.App.Config.Zoom.Cipher = "Wm9vbS1jaSBpcyBiZXR0ZXIgYmVjYXVzZSBvZiBVISE="
+	zoom.App.Config.Db.Prefix = "syd_"
+	zoom.App.ConfigHandle.SetValue("zoom", "app_name", zoom.App.Config.Zoom.AppName)
+	zoom.App.ConfigHandle.SetValue("zoom", "cipher_key", zoom.App.Config.Zoom.Cipher)
+	zoom.App.ConfigHandle.SetValue("database", "prefix", zoom.App.Config.Db.Prefix)
+	_ = goconfig.SaveConfigFile(zoom.App.ConfigHandle, zoom.App.ConfigFileHandle)
+
+	// database table
+	// TODO
+	zoom.App.DB.DbHandler.Exec("ALTER TABLE `syd_deploy_apply` CHANGE `audit_refusal_reasion` `audit_refusal_reason` VARCHAR(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '';")
+	zoom.App.DB.DbHandler.Exec("ALTER TABLE `syd_project` ADD `project_type` TINYINT NOT NULL DEFAULT '1' AFTER `description`;")
+
+	return true
+}
