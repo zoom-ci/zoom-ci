@@ -21,7 +21,7 @@
 1、下载[最新版本release包](https://github.com/zoom-ci/zoom-ci/releases),并将其拷贝到任意目录（比如：~/zoom_workspace）并执行;
 
 ```shell
-$ ./zoom-v1.0.0-darwin-amd64   # 这里以mac 64位版为例 
+$ ./zoom-v1.0.3-darwin-amd64   # 这里以mac 64位版为例 
 
  _____________________________
        ___                    
@@ -29,12 +29,12 @@ $ ./zoom-v1.0.0-darwin-amd64   # 这里以mac 64位版为例
  -------/-----__----__---_--_-
        /    /   ) /   ) / /  )
  ____(_____(___/_(___/_/_/__/_
-     / Zoom,a CI/CD service.  
+     /   Make CI/CD Easier.  
  (_ /                         
 
 
 Service:              zoom
-Version:              v1.0.0
+Version:              v1.0.3
 Config Loaded:        ./zoom.ini
 Log:                  stdout
 Mail Enable:          0
@@ -58,6 +58,7 @@ Start Running...
 - 支持远程、本地模式（已完成） 
 - 支持定时任务
 - 支持双向WebHook调用
+- 支持中英文切换（已完成）
 
 ## QQ群
 <p style="margin: 20px 0 40px 0;">
